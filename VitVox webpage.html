@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="https://kit.fontawesome.com/b76c086428.js" crossorigin="anonymous"></script>
+<title>Charts</title>
+<title>Vitamins Webpage with Speech Recognition</title>
+<style>
+*{margin:0;padding:0; font-family:sans-serif;}
+#Vitamin-content{display:none;}
+#chart-content{display:none;}
+/* ----------------- styling navbar ---------------- */
+nav{height:8vh;width:100%;background:#c25922; display: flex; margin-bottom:6px; align-items: center; justify-content: space-between; position: relative;}
+ 
+  nav ul{list-style:none;   margin-left:100%;
+    display: flex;
+    gap: 20px;}
+  nav li{margin-right:20px; margin-top:0px; cursor:pointer;}
+  nav a{text-decoration:none;font-size:20px; color:white;}
+  nav a:hover{background:rgba(0,0,0,0.3); padding:10px;}
+  
+/* ---------------- speech mode button ---------- */
+ 
+#speechBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 20px;
+  z-index: 1000;
+  background-color:#c25922;
+  color: white;
+  padding: 20px 25px;
+  border: 3px dotted #c29922;
+  border-radius: 50%; /* Fully circular */
+  cursor: pointer;
+  box-shadow: 0 10px 12px rgba(170, 100, 5, 0.6);
+  font-size: 14px; /* Larger icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+#speechBtn:hover {
+  background-color: #cc831d;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}  
+
+/* --------------- Deficiency checker navbar button -------------- */
+#defcheck{padding:9px 2px; background:rgba(0,0,0,0.7); padding:9px 10px; cursor:pointer; color:white; border:1px solid gray; margin-right:20px;opacity:0.7}
+#defa:hover{background:none;padding:0px;}
+#defcheck:hover{background:rgba(0,0,0,0.5);opacity:1;}
+
+ 
+/* ------------------ styling homepage --------------------*/
+#bigvittext{
+padding-left:100px;
+font-size:60px;
+font-family:Lucida Calligraphy;
+color:#d2691e;
+text-shadow:1px 1px black;}
+
+#homepagevittext{padding-left:105px;
+padding-top:-40px;
+font-size:18px;}
+
+
+#explorepage{margin-left:170px;
+text-decoration:none;
+color:white;
+font-size:16px;
+border-radius:10px;
+background-color:#d2691e;
+padding:10px 10px;}
+
+.author{margin-left:230px;}
+
+#explorepage:hover{color:white;
+background:#cd8f3f;
+border:8px solid #cd853f;
+}
+#Home-content{background-image:linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.1)),
+url("https://image.freepik.com/free-photo/flat-lay-fresh-berries-fruits-with-copy-space_23-2148233267.jpg");
+background-repeat:no-repeat;
+background-size:cover;
+background-position:center;
+height:85vh;
+justify-content:center;
+align-items:center;
+display:flex;
+}
+
+.speech-commands-card {
+  margin-top: 2.5rem;
+  background: rgba(255,247,237,0.8);
+  border: 2px solid #ED8B00;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.11);
+  padding: 1.8rem 1.5rem;
+  max-width: 470px;
+  color: #333;
+  margin-right:60px;
+
+}
+
+.speech-commands-card h2 {
+  font-size: 1.45rem;
+  color: #c25922;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.speech-commands-card ul {
+  list-style: none;
+  padding: 0;
+}
+.speech-commands-card li {
+margin-bottom:5px;
+font-size:14px;
+}
+
+/* ----------------- styling Vitamin page ---------------- */
+ /*topimage of vit page styling*/
+  .topimage{width:100%;height:400px;
+  background-image:url("https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg");
+  background-size:cover;
+  background-position-y:-120px;
+  background-repeat:no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  }
+  .toptext{width:65%;height:90px;background:rgba(0,0,0,0.5);color:white;
+  text-align:center; font-size:24px;
+  padding-top:34px;}
+  
+  .controls {
+    text-align: center;
+    margin-left:auto;
+	
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+	margin-left:30px;
+	margin-right:30px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 20px;
+    position: relative;
+    max-height: 300px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .card h2 {
+    margin-top: 0;
+	text-align:center;
+  }
+
+  .description {
+    margin: 10px 0;
+  }
+
+  .sources {
+    display: none;
+    margin-top: 10px;
+  }
+
+  .sources.show {
+    display: block;
+  }
+
+  .learn-more {
+    padding: 8px 12px;
+    background-color: #c25922;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  /* Expanded card styles */
+  .card.expanded {
+    max-height: 500px;
+  }
+
+  /* Custom input box for vitamin input */
+  #vitaminInputContainer {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+  }
+
+  #vitaminInputContainer input {
+    padding: 8px;
+    font-size: 16px;
+    width: 200px;
+  }
+
+  #vitaminInputContainer button {
+    padding: 8px 12px;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  .card img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  display: block;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+/* ----------------- styling chart table ---------------- */
+h2{text-align:center;}
+
+table{width:65%; margin-top:10px;}
+table{margin-left:100px;}
+#value{color:white;font-family:sans-serif;}
+#value:hover{background:#cd853f;
+border:10px solid #cd853f;
+}
+#firstrow{background:#c25922; }
+#firstcol{background:rgba(210,105,30,0.2);}
+
+th{ padding:10px 1px;}
+td{border:1px solid gray;}
+
+/* ----------------- styling footer---------------- */
+footer{ height:7vh;width:100%;background:#c25922; margin-top:6px;
+display:flex; align-items:center;justify-content:space-around;
+}
+
+footer a{text-decoration:none; color:white; opacity:0.7;}
+footer a:hover{opacity:1;}
+footer ul{list-style:none; display:flex; gap:15px;}
+footer button{background:rgba(0,0,0,0.3); padding:7px 10px; cursor:pointer; color:white; border:none; }
+footer button:hover{background:rgba(0,0,0,0.5);}
+#f2link{gap:20px;}
+
+/* -------------------- styling deficiency checker ------------------- */
+/* Deficiency Checker section styles */
+#deficiencySection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+  margin:0px 30px;
+	 background: #fff;
+    padding: 30px 0;
+    border-radius: 16px;
+    box-shadow: 0 6px 32px rgba(80, 60, 20, 0.08), 0 0.5px 2px #e4e4dc;
+	
+}
+
+#dropdowndata {
+    background: rgba(200,85,2,0.3);
+    padding: 40px 100px 32px 100px;
+    border-radius:6px;
+    box-shadow: 0 1px 6px #c25922;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 450px;
+    max-width: 88vw;
+    margin: 0 auto;
+}
+
+#dropdowndata h4 {
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    color: #333;
+    font-weight: 700;
+    text-align: center;
+}
+
+#symptomsDropdown {
+    width: 260px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1.5px solid #b69a6c;
+    box-shadow: 0 1px 4px #eee;
+    margin-bottom: 8px;
+}
+
+#checkBtn {
+    padding: 12px 28px;
+    margin: 1px 0 16px 0;
+    border: none;
+    border-radius: 7px;
+    background: #c4601d;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 3px 0 #94602c;
+    transition: background 0.16s, transform 0.12s;
+    cursor: pointer;
+    outline: none;
+}
+#checkBtn:hover, #checkBtn:focus {
+    background: #a0450d;
+    transform: translateY(2px) scale(1.04);
+}
+
+#deficiencyResult {
+    margin-top: 14px;
+    min-height: 36px;
+    background: rgba(243,243,243,0.5);
+    border-radius: 5px;
+    padding: 18px 22px;
+    color:#c25922;
+    font-size: 1.06rem;
+   
+    width: 100%;
+	
+    text-align: center;
+    font-weight: 500;
+    border: 1px solid #c25922;
+}
+
+#deficiencyPrompt {
+  display: none; /* Hidden initially */
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1001;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+}
+#deficiencyPrompt h4 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+#deficiencyPrompt p {
+  margin-bottom: 10px;
+}
+#defInput{ height:35px;}
+#deficiencyPrompt button {
+  margin-top: 10px;
+
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #c25922;
+  color: white;
+  cursor: pointer;
+}
+#deficiencyPrompt button:hover {
+  background-color: #a0450d;
+}
+/* mobile view */
+/* Responsive styles for mobile devices */
+@media(max-width: 768px) {
+*{margin:0; padding:0;}
+  nav{width:100%;
+height:auto;}
+
+  #Home-content {
+    flex-direction: column; /* stack elements vertically */
+	height:auto;
+	justify-content:center;
+	align-items:center; 
+  }
+#homepagecolumn1{margin-left:0px;}
+
+.speech-commands-card{margin-right:10%; margin-left:10%;}
+#bigvittext{margin-left:10%; margin-top:5%; margin-right:10%;padding:0px;font-size:26px;}
+#homepagevittext{margin-right:10%; margin-left:10%;padding:0px;font-size:14px;}
+h2{font-size:14px;}
+p{font-size:12px;}
+#instrlist{font-size:1px;}
+#instr{font-size:14px;}
+#explorepage{ margin-left:30%; margin-right:30%;}
+
+#toptext{font-size:14px; }
+.topimage{ background-position-y:-50px;height:200px;}
+
+#dropdowndata{padding:10px 5px; width:100%; margin:3%;}
+#deficiencySection{height:auto; padding-top:5%; padding-bottom:5%;min-height: 0vh;}
+#deficiencyResult{width:auto;}
+
+ .table-responsive {
+    overflow-x: auto; /* enables horizontal scroll if needed */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+  }
+  table {
+    width: 100%;
+    min-width: 600px; 
+	margin-left:10px;
+  }
+   table {
+    width: 100%;
+    font-size: 14px; /* reduce font size for smaller screens */
+  }
+  th, td {
+    padding: 8px; /* lessen padding for narrow screens */
+  }
+
+ .navbar {
+    display: flex;
+	justify-content: center; 
+    flex-direction: column; /* stack items vertically */
+    align-items: center;	/* center horizontally */
+	margin:0px;padding-bottom:10px;
+  }
+  nav ul{ margin-left:0px;}
+  nav img{margin-top:-10px;}
+  nav ul{margin-top:-30px;}
+
+}
+</style>
+</head>
+<body onload="showhomepage()">
+<!------------------------------------------------- Designing Navigation bar ------------------------------------>
+<nav class="navbar themebg" id="navbar">
+<div><img src="C:\Users\jasdevsingh\Downloads\vitavoxlogo.png" width="100" id="navlogo" ></div>
+<div><ul>
+<li><a class="nav-link" href="#" onclick="showhomepage()">Home</a></li>
+<li><a class="nav-link" href="#" onclick="showvitpage()">Vitamins</a></li>
+<li><a class="nav-link" href="#" onclick="showchartpage()">Chart</a></li>
+</ul></div>
+<div class="controls"><button class="themebg" id="speechBtn">🔊️ Speech Mode</button> </div>
+<a id="defa" onclick="showvitpage()" href="#deficiencyResult"><button id="defcheck">Deficiency checker</button></a>
+</nav>
+<!--------------------------------------------------- ending navbar ------------------------------------------------->
+
+<!------------------------------------------------- Designing Homepage content --------------------------------------->
+<div id="Home-content">
+<div id="homepagecolumn1"> <!-- First part of homepage -->
+<h1 id="bigvittext" class="themetxt">VITAVOX</h1><br> 
+<div id="homepagevittext">
+     <p><b><i>Your go-to source for vitamins details and deficiency diagnosis.<br>Change layouts and styles hands-free using voice control for a personalized experience</i></b></p><br><br>
+     <p id="quote">The excitement of vitamins, nutrition, and metabolism<br>permeated the environment.</p><br> 
+</div>
+<p class="author"><u>- Pual D. Boyer</u></p><br>
+<br>
+<div class="button" ><a href="#" onclick="showvitpage()" id="explorepage" class="themebg" >Explore More</a> </div>
+</div>
+<div id="homepagecolumn2" class="speech-commands-card">    <!-- 2nd part of homepage -->
+  <h2 class="themetxt"><span aria-hidden="true" style="vertical-align:middle;" id="instr"> 🗣️ Speech Mode Instructions </h2>
+  <p  class="themetxt" style="color:#c25922;"><b>Click Speech Mode button on bottom right for AI speech mode</b></p><br>
+  <ul id="instrlist">
+  <li>Say: <Strong>"Go to [Home/Vitamin/Chart] page" </Strong><span class="desc"> — Change page</span></li>
+	<li>Say: <Strong>"Click explore more"</Strong><span class="desc">— click explore more button</span></li>
+    <li>Say: <Strong>"Change background color to [colorname]"</Strong><span class="desc">— Change page background color</span></li>
+    <li>Say: <Strong>"Change text color to [colorname]"</Strong><span class="desc">— Change text color of webpage</span></li>
+	 <li>Say: <Strong>"Change theme to [colorname]"</Strong><span class="desc">— Change text color of webpage</span></li>
+    <li>Say: <Strong>"Scroll down / scroll up"</Strong><span class="desc">— Scroll the page</span></li>
+    <li>Say: <Strong>"Click Learn more"</Strong><span class="desc">— Learn about vitamins</span></li>
+    <li>Say: <Strong>"Stop speech mode"</Strong><span class="desc">— Stop AI speech mode</span></li>
+    <li>Say: <Strong>"Refresh the screen"</Strong><span class="desc">— Refresh the page</span></li>
+	 <li>Say: <Strong>"Check deficiency"</Strong><span class="desc">— to check vitamin deficiency</span></li>
+  
+  </ul>
+</div>
+</div>
+<!------------------------------------------------- End Designing Homepage content --------------------------------------->
+
+<!------------------------------------------------- Designing Vitamin Page content --------------------------------------->
+<div id="Vitamin-content">
+<div class="topimage">
+   <div class="toptext" id="toptext">
+    <h4>OPTIMISE YOUR IMMUNE AND METABOLISM</h4>
+	<p>Proper Vitamins are the best way to recover.</p>
+    </div>
+</div><br>
+<h2><u>Essential Vitamins</u></h2><br>
+<div class="grid" id="vitaminGrid">
+<!-- Vitamin cards will be inserted here by JS -->
+</div><br><br>
+<h2><u>Check Vitamin Deficiency</u></h2><br>
+<!--deficiency checker -->
+<div id="deficiencySection">
+<div id="dropdowndata">
+  <div> <h4>Select your Symptom from dropdown: </h4></div><br>
+  <div><select id="symptomsDropdown">
+  <option value="">Select Symptoms</option>
+    <option value="weakness">Weakness</option>
+    <option value="vision problem">Vision problems / Blindness</option>
+    <option value="bleeding">Bleeding / Bruising</option>
+    <option value="muscle weakness">Muscle weakness</option>
+    <option value="skin">skin</option>
+    <option value="numbness">Numbness / Tingling</option>
+    <option value="depression">Depression</option>
+	<option value="mood changes">Mood changes</option>
+    <option value="appetite">Loss of appetite</option>
+    <option value="hair loss">Hair loss</option> 
+  </select>
+  </div><br>
+ <div> <button  id="checkBtn">Check Deficiency</button></div>
+  <div id="deficiencyResult" ></div>
+</div>
+</div>
+
+<!-- Custom input container for vitamin name input -->
+<div id="vitaminInputContainer">
+   <input type="text" id="vitaminInput" placeholder="Say vitamin name : A, B, C, D, E, K)" />
+  <h6>Eg. If vitamin A : Say "vitamin A"</h6>
+  <button id="submitVitamin">OK</button>
+</div>
+<!-- Custom input container for deficiency input -->
+<div id="deficiencyPrompt">
+  <h4>What deficiency are you concerned about? Select 1 from below:</h4> <br>
+  <p>Skin, Fatigue, weakness, vision problem, Muscle weakness, Numbness, Depression, Mood changes, Appetite, Hair loss</p><br>
+   <input type="text" id="defInput" placeholder="Say deficiency type" /><br>
+  <button id="closeDeficiencyPrompt">Submit</button>
+</div>
+</div>
+<!------------------------------------------------- End Designing Vitamin Page content --------------------------------------->
+
+<!------------------------------------------------- Designing Chart Page content --------------------------------------->
+<div id="chart-content">
+<div class="main">
+<div class="table-responsive">       <!-- first table chart -->
+<table class="table table-bordered" style="width:75%; border:0.5px solid black;" >
+<tr>
+<th colspan="5" style="font-size:18px; border:1px solid white;">Table 1: Vitamin's cheet sheet</th>
+</tr>
+<div class="rowsdata">
+<tr id="firstrow" class="themebg">
+<th>Vitamin name</th>
+<th>Benefits</th>
+<th>Deficiency effects</th>
+<th>Overdose Effects</th>
+<th>Food Sources</th>
+</tr>
+<tr>
+<td id="firstcol">Vitamin A<br>(Retinol)</td>
+<td>Vision, immunity,<br>reproduction and growth</td>
+<td>Blindness, infections,<br>stunted growth</td>
+<td>Liver damage, birth<br>defects</td>
+<td>Milk, eggs, cheese, <br>carrots, liver and meat</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin B1<br>(Thiamin)</td>
+<td>Energy metabolism ,vision,<br>cure aids and cancer</td>
+<td>Beriberi, neurological<br>problems</td>
+<td>none</td>
+<td>Oranges, cereals, pulses, <br>whole grain products</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin B2<br>(Riboflavin)</td>
+<td>Energy metabolism ,immunity<br>healthy skin tissues</td>
+<td>inflammation of mouth,<br>skin</td>
+<td>none</td>
+<td>Poultry food, Dairy products,<br>beans, eggs, avocados</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin B3<br>(Niacin)</td>
+<td>Energy metabolism, brain <br>cure diabetes, </td>
+<td>Pellegra<br>problems</td>
+<td>Impaired glucose,liver<br>damage,Niacin flush</td>
+<td>protein rich foods, peanut, <br>rice, chicken</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin B5<br>(pantothenic acid)</td>
+<td>Stamina, protein, fat and<br>carbohydrate metabolism</td>
+<td>Extremely rare</td>
+<td>Mild intestinal distress</td>
+<td>Avocados,broccoli,meat, <br>eggs </td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin B6<br>(pyridoxine, pyridoxamine)</td>
+<td> Protein and fat metabolism,<br>improve hormones</td>
+<td>Anemia, scaly dermatitis</td>
+<td>Nerve degeneration</td>
+<td>Protein rich foods,Bananas,<br>Pistachios </td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin B7<br>(Biotin)</td>
+<td>protein and fat metabolism,<br>improve skin and nails</td>
+<td>extremely rare</td>
+<td>unlikely</td>
+<td>Eggs, yolk, liver, <br>almonds, nuts, onions </td>
+</tr>
+
+
+<tr>
+<td id="firstcol">Vitamin B9<br>(Folate, Folic acid)</td>
+<td>Make new cells, promotes health<br>improve hemoglobin</td>
+<td>anemia, birth defects</td>
+<td>Masks a B12 deficiency</td>
+<td>Vegetables, grain products <br>oranges, sweet corn, soyabeans </td>
+</tr>
+
+
+<tr>
+<td id="firstcol">Vitamin B12<br>(Cobalamin)</td>
+<td>Protect nerve cells, activates folate,<br>forms rbc in body</td>
+<td>Anemia, nerve damage and <br>paralysis</td>
+<td>Not much</td>
+<td>Meat, fish, milk products, <br>poultry products</td>
+</tr>
+
+
+<tr>
+<td id="firstcol">Vitamin C<br>(Ascorbic acid)</td>
+<td>Antioxident, collagen synthesis, <br>immunity booster, vision</td>
+<td>Scurvy</td>
+<td>Intestinal discomfort,<br>diarrhea</td>
+<td>Citrus foods(oranges,lemon),vegetables, <br>strawberry, peppers</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin D<br>(Chloecalciferol)</td>
+<td>Bone growth and maintainance,<br>absorption of calcium</td>
+<td>Rickets, osteomalacia</td>
+<td>Calcium imbalance, hardning<br> of blood vessels</td>
+<td>Sunlight, fortified milk, fish,<br>eggs, liver, mushrooms</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin E<br>(Tocopherol)</td>
+<td>Antioxident, protects cells and <br>tissues, nourish skin </td>
+<td>RBC breakage, <br>nerve damage</td>
+<td>Blood thining, weaknees, fatigue</td>
+<td>Vegetables, seeds, whole grains,<br>nuts, avocado, olive oil</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin K<br>(Phylloquinone)</td>
+<td>blood clotting, bone health, <br>metabolism</td>
+<td>Hemorrhage</td>
+<td>Rare</td>
+<td>All green leafy vegetables, peas, liver, cashews <br></td>
+</tr>
+</table>
+</div>
+</div>
+<br><br>
+<div class="table-responsive">  <!-- Second table chart -->
+<table class="table table-bordered" style="width:75%; border:0.5px solid black;" >
+<tr>
+<th colspan="3" style="font-size:18px; border:1px solid white;">Table 2: Vitamin's intake value table</th>
+</tr>
+<div class="rowsdata">
+<tr id="firstrow" class="themebg">
+<th>Vitamin name</th>
+<th>For childrens</th>
+<th>For adults</th>
+</tr>
+<tr>
+<td id="firstcol">Vitamin A<br>(Retinol)</td>
+<td>600-900 microgram(mcg)</td>
+<td>2000-3000 microgram(mcg)</td>
+</tr>
+<tr>
+<td id="firstcol">Vitamin B1<br>(Thiamin)</td>
+<td>1 milligram(mg)</td>
+<td>1.2 milligram(mg) </td>
+</tr>
+<tr>
+<td id="firstcol">Vitamin B2<br>(Riboflavin)</td>
+<td>1 milligram(mg)</td>
+<td>1.3 milligram(mg)</td>
+</tr>
+<tr>
+<td id="firstcol">Vitamin B3<br>(Niacin)</td>
+<td>13-14 milligram(mg) </td>
+<td>16 milligram(mg)</td>
+</tr>
+<tr>
+<td id="firstcol">Vitamin B5<br>(pantothenic acid)</td>
+<td>3 milligram(mg)</td>
+<td>5-6 milligram(mg)</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin B6<br>(pyridoxine, pyridoxamine)</td>
+<td> 1 milligram(mg)</td>
+<td>1.3 milligram(mg)</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin B7<br>(Biotin)</td>
+<td>15-20 microgram(mcg)</td>
+<td>30 microgram(mcg)</td>
+</tr>
+
+
+<tr>
+<td id="firstcol">Vitamin B9<br>(Folate, Folic acid)</td>
+<td>200-400 microgram(mcg)</td>
+<td>400-600 microgram(mcg)</td>
+</tr>
+
+
+<tr>
+<td id="firstcol">Vitamin B12<br>(Cobalamin)</td>
+<td>2.4 microgram(mcg)</td>
+<td>2.4 microgram(mcg)</td>
+</tr>
+
+
+<tr>
+<td id="firstcol">Vitamin C<br>(Ascorbic acid)</td>
+<td>15-45 milligram(mg)</td>
+<td>75-90 milligram(mg)</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin D<br>(Chloecalciferol)</td>
+<td>10-15 microgram(mcg)</td>
+<td>20 microgram(mcg)</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin E<br>(Tocopherol)</td>
+<td>5-10 milligram(mg) </td>
+<td>15 milligram(mg)</td>
+</tr>
+
+<tr>
+<td id="firstcol">Vitamin K<br>(Phylloquinone)</td>
+<td>50-75 microgram(mg)</td>
+<td>120 microgram(mg)</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!------------------------------------------------- End Designing Chart Page content --------------------------------------->
+<!----------------------------------------------------------- Footer Design ------------------------------------------------->
+<footer class="themebg">
+<div id="ftrpart3"><a href="#navbar"><button>⬆ Back to Top</button></a></div>
+<div id="ftrpart2">
+<ul id="f2link">
+<li><a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer"><i  id="icon" class="fab fa-github"></i></a></li>
+<li><a href="https://in.linkedin.com/in/neha-jangra-93b470254" target="_blank" rel="noopener noreferrer"><i id="icon" class="fab fa-linkedin"></i></a></li>
+<li><a href="mailto:jangraneha791@gmail.com"><i id="icon" class="fas fa-envelope"></i></a></li>
+</ul>
+</div>
+<div id="ftrpart3">
+<ul>
+<li><a class="nav-link" href="#" onclick="showhomepage()">Home</a></li>
+<li><a class="nav-link" href="#" onclick="showvitpage()">Vitamins</a></li>
+<li><a class="nav-link" href="#" onclick="showchartpage()">Chart</a></li>
+</ul>
+</div>
+</footer>
+<!----------------------------------------------------------- End Footer Design ------------------------------------------------->
+
+<!------------------------------------------------------ Javascript starts here ----------------------------------------------->
+<script>
+//Defining all the variables
+const homepage =  document.getElementById('Home-content');
+const vitaminpage =  document.getElementById('Vitamin-content');
+const chartpage =  document.getElementById('chart-content');
+
+
+//functions to display different pages mentioned in navbar
+function showhomepage()
+{
+homepage.style.display="flex";
+vitaminpage.style.display="none";
+chartpage.style.display="none";
+}
+
+function showvitpage()
+{
+homepage.style.display="none";
+vitaminpage.style.display="block";
+chartpage.style.display="none";
+}
+function showchartpage()
+{
+homepage.style.display="none";
+vitaminpage.style.display="none";
+chartpage.style.display="block";
+}
+// ------------------------------------------------------ implement vitamin cards and logic ----------------------------------------------------------------------
+//Creating Vitamin Charts content Vit A,B,C,D,E,K
+const vitamins = [
+    {
+      name: "Vitamin A",
+	  image:"https://img.freepik.com/free-vector/vitamin-retinol-sources-with-vegetables-egg_1308-182752.jpg?semt=ais_hybrid&w=740&q=80",
+      description: "Supports vision, immune system, and skin health.",
+      sources: "<b>Chemical Name:</b> Retinol <br><b>Benefits:</b> Vision, Immunity, Reproduction and Growth<br><b>Sources:</b> Milk, Eggs, Cheese, Carrots, Liver and Meat. "
+    },
+    {
+      name: "Vitamin B",
+	   image:"https://img.freepik.com/premium-vector/vector-illustration-group-fruits-vegetables-enriched-vitamin-b_575838-2044.jpg?semt=ais_hybrid&w=740&q=80",
+      description: "Important for energy production and brain health.",
+      sources: "<b>Chemical Name:</b> Thiamin,Niacin <br><b>Benefits:</b> Energy, Vision, Metabolism, Skin, Brain health and Stamina<br><b>Sources:</b> Orange, Pulses, Peanuts, Banana, whole grains, meat, eggs and dairy."
+    },
+    {
+      name: "Vitamin C",
+	   image:"https://img.freepik.com/free-photo/flat-lay-arrangement-healthy-food-immunity-boosting_23-2148890220.jpg?t=st=1762194979~exp=1762198579~hmac=c4a10dc3c73ba653fc00c558824037e0bcbb5557579b2fcc1188965f4f72f1b4",
+      description: "Boosts immune system and antioxidant properties.",
+      sources: "<b>Chemical Name:</b> Ascorbic Acid<br><b>Benefits:</b> Antioxidant, Collagen synthesis, Vision, Skin and Immunity Booster<br><b>Sources:</b> Citrus fruits,vegetables,peppers, strawberries, and bell peppers."
+    },
+    {
+      name: "Vitamin D",
+	   image:"https://img.freepik.com/premium-photo/healthy-foods-containing-vitamin-d_82893-10316.jpg?semt=ais_hybrid&w=740&q=80",
+      description: "Helps with calcium absorption and bone health.",
+      sources: "<b>Chemical Name:</b> Chloecalciferol <br><b>Benefits:</b> Bone Health, Calcium, Bone Growth and Blood health.<br><b>Sources:</b> sunlight, fatty fish, mushrooms, eggs and fortified milk."
+    },
+    {
+      name: "Vitamin E",
+	   image:"https://img.freepik.com/premium-photo/assortment-food-sources-vitamin-e_82893-8174.jpg?semt=ais_hybrid&w=740&q=80",
+      description: "Antioxidant protecting cells from damage.",
+      sources: "<b>Chemical Name:</b> Tocopherol <br><b>Benefits:</b> Cells protection, Skin, Tissues heath and Nerve health<br><b>Sources:</b> Olive oil, avocado, nuts, seeds, and green leafy vegetables."
+    },
+    {
+      name: "Vitamin K",
+	  image:"https://img.freepik.com/premium-photo/products-containing-potassium-healthy-food-concept_82893-8885.jpg",
+      description: "Essential for blood clotting and bone health.",
+      sources: "<b>Chemical Name:</b> Phylloquinone <br><b>Benefits:</b> Fix blood clotting, bone health and Metabolism<br><b>Sources:</b> Green leafy vegetables, peas, cashews, kale, spinach, and broccoli."
+    }
+  ];
+const gridContainer = document.getElementById('vitaminGrid');
+const toptext =  document.getElementById('toptext');
+  // Generate cards using JS according to content created above
+ vitamins.forEach((vit, index) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.index = index;
+
+    const title = document.createElement('h2');
+    title.textContent = vit.name;
+	
+	const img=document.createElement('img');
+	img.src=vit.image;
+	
+    const desc = document.createElement('p');
+    desc.className = 'description';
+    desc.textContent = vit.description;
+
+    const learnBtn = document.createElement('button');
+    learnBtn.className = 'learn-more themebg';
+    learnBtn.textContent = 'Learn More';
+
+    const sourcesDiv = document.createElement('div');
+    sourcesDiv.className = 'sources';
+    sourcesDiv.innerHTML = vit.sources;
+
+    // Toggle expand and show sources
+    learnBtn.addEventListener('click', () => {
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('expanded'));
+      document.querySelectorAll('.sources').forEach(s => s.classList.remove('show'));
+
+      if (!card.classList.contains('expanded')) {
+        card.classList.add('expanded');
+        sourcesDiv.classList.add('show');
+      } else {
+        card.classList.remove('expanded');
+        sourcesDiv.classList.remove('show');
+      }
+ });
+
+    card.appendChild(title);
+	card.appendChild(img); 
+    card.appendChild(desc);
+    card.appendChild(learnBtn);
+    card.appendChild(sourcesDiv);
+
+    gridContainer.appendChild(card);
+  });
+// ------------------------------------------------------ Ending implementation of vitamin cards and logic ----------------------------------------------------------------------
+
+// --------------------------------------------------   implementing deficiency checker logic --------------------------------------------------------
+document.getElementById('checkBtn').addEventListener('click', () => {
+  checkDeficiency();  //calling function
+});
+
+function checkDeficiency() {
+  const selectedSymptom = document.getElementById('symptomsDropdown').value;  //set dropdown value for Symptom
+  const resultDiv = document.getElementById('deficiencyResult');
+  if (!selectedSymptom) {
+    resultDiv.innerHTML = 'Please select symptoms from dropdown.';
+    return;
+  }
+//set deficiency result for different dropdown values
+ switch (selectedSymptom) {
+    case 'weakness':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin B12 or Vitamin D.';
+      break;
+    case 'vision problem':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin A.';
+      break;
+    case 'bleeding':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin K.';
+      break;
+    case 'muscle weakness':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin D.';
+      break;
+    case 'skin':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin B2 or B3.';
+      break;
+    case 'numbness':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin B12.';
+      break;
+    case 'depression':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin B6 or B9.';
+      break;
+	case 'mood changes':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin B6 or B9.';
+      break;
+    case 'appetite':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin B1.';
+      break;
+    case 'hair loss':
+      resultDiv.innerHTML = 'Possible deficiency: Vitamin B7.';
+      break;
+    default:
+      resultDiv.innerHTML = 'No data for selected symptoms.';
+  }
+}
+ // -------------------------------------------------- ending deficiency checker logic --------------------------------------------------------
+ 
+// --------------------------------------------------- Setting up speech recognization to handle voice operations -----------------------------
+
+const speechBtn = document.getElementById('speechBtn');
+  let recognizing = false;
+  let recognition;
+  // Initialize speech recognition
+  function initSpeechRecognition() {    //check supported browser
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Sorry, your browser does not support Speech Recognition.');
+      return;
+    }
+	//speech recog variable setup
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = (event) => {
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          const transcript = event.results[i][0].transcript.trim();
+          handleVoiceCommand(transcript.toLowerCase());
+        }
+      }
+    };
+    recognition.onend = () => {
+      if (recognizing) {
+        recognition.start(); //start recognization
+      }
+    };
+  }
+  
+  //create start and stop recognization functions
+  function startRecognition() {
+    if (recognition) {
+      recognition.start();
+      recognizing = true;
+      speechBtn.textContent = '🛑 Stop Speech Mode';
+    }
+  }
+
+  function stopRecognition() {
+    if (recognition) {
+      recognition.stop();
+      recognizing = false;
+      speechBtn.textContent = '🗣️ Speech Mode';
+    }
+  }
+
+  // Button to toggle speech recognition (start/stop)
+  document.getElementById('speechBtn').addEventListener('click', () => {
+    if (recognizing) {
+      stopRecognition();
+    } else {
+      initSpeechRecognition();
+      startRecognition();
+    }
+  });
+  
+  //create variables for vitamins content
+   let awaitingVitaminInput = false;
+
+  // Elements for custom input for prompt screens for vitamin and deficiency
+  const inputContainer = document.getElementById('vitaminInputContainer');
+  const inputField = document.getElementById('vitaminInput');
+  const inputButton = document.getElementById('submitVitamin');
+  const definputContainer = document.getElementById('deficiencyInputContainer');
+  const definputField = document.getElementById('deficiencyInput');
+  const definputButton = document.getElementById('submitdeficiency');
+// --------------------------------------------------- Ending speech recognization setup to handle voice operations -----------------------------
+
+// --------------------------------------------------- create function to handle voice commands  -----------------------------
+function handleVoiceCommand(command) {
+ console.log('Voice Command:', command);
+  // handling UI layout
+    const colors = ['red', 'yellow', 'green', 'blue', 'pink', 'brown', 'black', 'white','orange','purple','aqua','gold','crimson','indigo','lavender','navy','lime','fuchsia','teal',
+	'silver','turquoise','magenta'];
+
+  // Color commands
+    for (let color of colors) {
+      if (command.includes(`change text colour to ${color}`) || command.includes(`text colour ${color}`)) {
+        document.body.style.color = color;
+		toptext.style.color = color;
+        return;
+      }
+      if (command.includes(`change background colour to ${color}`) || command.includes(`background color ${color}`)) {
+        document.body.style.backgroundColor = color;
+        return;
+      }
+    }
+	 // theme Change color commands
+	 const themebg = document.querySelectorAll('.themebg');
+	  const themebg2 = document.querySelectorAll('.learn-more');
+	 const themetxt = document.querySelectorAll('.themetxt');
+	 const themebglight = document.querySelectorAll('#firstcol');
+	 const defcheckertheme=document.getElementById('dropdowndata');
+	 const commands2 = document.getElementById('homepagecolumn2');
+	 const defcheckbtn = document.getElementById('checkBtn');
+     for (let color of colors) {
+      if (command.includes(`change theme to ${color}`)) {
+
+  // Iterate over the NodeList and change the background color of each
+  themebg.forEach(themebg => {
+    themebg.style.backgroundColor = color;
+  });
+   themebg2.forEach(themebg2 => {
+    themebg2.style.backgroundColor = color;
+  });
+   themetxt.forEach(themetxt => {
+    themetxt.style.color = color;
+  });
+   themebglight.forEach(themebglight => {
+    themebglight.style.backgroundColor = color;
+	themebglight.style.opacity = '0.4';
+  });
+  defcheckertheme.style.backgroundColor=color;
+ 
+  commands2.style.borderColor = color;
+  defcheckbtn.style.opacity='0.6';
+        return;
+      }
+    }
+   
+	
+	// Scroll commands
+    if (command.includes('scroll down')) {
+      window.scrollBy({ top: 200, behavior: 'smooth' });
+      return;
+    }
+    if (command.includes('scroll up')) {
+      window.scrollBy({ top: -200, behavior: 'smooth' });
+      return;
+    }
+	//stop Speech
+	  if (command.includes('stop speech mode')) {
+      stopRecognition();
+	  alert("Speech mode is stopped now! Click Ok to continue without speech mode.")
+
+      return;
+    }
+	//refresh screen
+	 if (command.includes('refresh the screen')) {
+      window.location.reload();
+      return;
+    }
+	
+	//explore More
+	 if (command.includes('click explore more')) {
+      showvitpage();
+      return;
+    }
+	//homenavigation
+	 if (command.includes('go to home page')||command.includes('go to homepage') || command.includes('goto homepage')|| command.includes('Show command page') ) {
+      showhomepage();
+      return;
+    }
+	//vitaminnavigation
+	 if (command.includes('go to vitamin page')||command.includes('go to vitamins page') ) {
+      showvitpage();
+      return;
+    }
+	//chartnavigation
+	 if (command.includes('go to chart page')||command.includes('go to chat page') || command.includes('display chart') ) {
+      showchartpage();
+      return;
+    }
+	
+    //handling vitamin charts and click learn more buttons commands
+	 if (awaitingVitaminInput) {
+      // Fill the input box with spoken vitamin, process it
+      inputField.value = command;
+      processVitaminInput(command);
+      hideVitaminInput();
+      return;
+    }
+	 // Commands to trigger vitamin info
+    if (command.includes('click learn more') || command.includes('learn more') || command.includes('land more')) {
+      showVitaminInput();
+      return;
+    }
+
+    // Direct mention of vitamin
+    const vitaminMatch = command.match(/vitamin\s*(a|b|c|d|e|k)/);
+    if (vitaminMatch) {
+      processVitaminInput(vitaminMatch[1]);
+      return;
+    }
+	// handling deficiency prompt and commands
+    let deficiencyPromptActive = false;
+    let deficiencySpeechActive = false;
+
+    // Function to show deficiency prompt
+  function showDeficiencyPrompt() {
+  document.getElementById('deficiencyPrompt').style.display = 'block';
+  deficiencyPromptActive = true;
+    }
+ 
+   const deficiencytype = [ 'skin','weakness','numbness','vision problem','bleeding','muscle weakness','mood changes','depression','appetite','hair loss'];
+   // Function to hide deficiency prompt
+   function hideDeficiencyPrompt() {
+   document.getElementById('deficiencyPrompt').style.display = 'none';
+   deficiencyPromptActive = false;
+    }
+	const defbtn = document.getElementById('defcheck');
+
+    // Commands to trigger prompt
+    if (command.includes('deficiency') || command.includes('check deficiency')) {
+	  defbtn.click();
+	  document.getElementById('symptomsDropdown').scrollIntoView();
+      showDeficiencyPrompt();
+      return;
+     }
+	//update deficiency result acc or user command
+      for (const def of deficiencytype) {
+      if (command.includes(`${def}`)) {  //type of deficiency command
+		 document.getElementById('defInput').value = def;
+		 setTimeout(function() {
+         console.log("This runs after 1 second");
+         }, 1000);
+		 hideDeficiencyPrompt();
+		 document.getElementById('symptomsDropdown').value=def;
+		 checkDeficiency();
+	     return;
+        }
+	}
+	  
+} //closing handlevoiecommand function
+
+// --------------------------------------------------- ending of function to handle voice commands  -----------------------------
+
+// Show input box for vitamin name
+  function showVitaminInput() {
+    inputContainer.style.display = 'block';
+    inputField.value = '';
+    inputField.focus();
+    awaitingVitaminInput = true;
+  }
+
+  // Hide input box
+  function hideVitaminInput() {
+    inputContainer.style.display = 'none';
+    awaitingVitaminInput = false;
+  }
+  
+
+  // Process entered vitamin name
+  function processVitaminInput(vitaminName) {
+    const input = vitaminName.trim().toLowerCase();
+
+    // Map for exact matching
+    const vitaminMap = {
+      'a': 0,
+      'b': 1,
+      'c': 2,
+      'd': 3,
+      'e': 4,
+      'k': 5
+    };
+
+    // First, check if input is a single letter matching one of the vitamins
+    if (input.length === 1 && vitaminMap.hasOwnProperty(input)) {
+      const index = vitaminMap[input];
+      triggerVitaminCard(index);
+      return;
+    }
+
+    // Otherwise, check if input matches full name or contains key letter accurately
+    for (const [key, idx] of Object.entries(vitaminMap)) {
+      const nameLower = vitamins[idx].name.toLowerCase();
+      if (nameLower.includes(input) || input === key) {
+        triggerVitaminCard(idx);
+        return;
+      }
+    }
+
+    // If no match
+    alert('Sorry, I could not identify the vitamin. Please say A, B, C, D, E, or K.');
+  }
+
+  function triggerVitaminCard(index) {
+    const card = document.querySelector(`.card[data-index="${index}"]`);
+    if (card) {
+      const btn = card.querySelector('.learn-more');
+      if (btn) {
+        btn.click();
+      }
+	  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+
+  // Attach event to OK button in custom input
+  document.getElementById('submitVitamin').addEventListener('click', () => {
+    const val = document.getElementById('vitaminInput').value;
+    processVitaminInput(val);
+    hideVitaminInput();
+  });
+
+
+</script>
+<!------------------------------------------------------ Javascript Ends here ----------------------------------------------->
+
+</body>
+</html>
